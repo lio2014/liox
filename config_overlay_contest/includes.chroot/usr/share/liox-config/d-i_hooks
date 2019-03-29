@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+for P in $(ls /usr/share/liox-config/patches/*.patch); do
+    patch -d/ -p0 < ${P}
+done
+
+cp -aT /usr/share/liox-config/post-inst-overlay /
+
+cat >> /etc/hosts <<EOF
+63.34.195.141 olimp.cms.lmio.lt
+52.58.31.131 ctrl.lmio.lt
+EOF
+
+useradd -m -s /bin/bash -p $(cat /usr/share/liox-config/d0-shadow) d0
+useradd -m -s /bin/bash -p $(cat /usr/share/liox-config/d1-shadow) d1
+useradd -m -s /bin/bash -p $(cat /usr/share/liox-config/d2-shadow) d2
+shred --remove /usr/share/liox-config/d*-shadow
+
+# Be doubly sure
+chown root:root /etc/olimp-control/key
+chmod 400 /etc/olimp-control/key
+
+systemctl disable apt-daily-upgrade.timer
+systemctl disable apt-daily.timer
+systemctl disable man-db.timer
+systemctl mask apparmor.service
+
+systemctl mask networking.service
+systemctl enable lmio-networking.service
+
+rm /var/lib/apt/lists/*
+
+update-grub
+
+THEUUID=$(blkid | grep /dev/sda1 | cut "-d " -f 2)
+sed -i -e "s/\/dev\/sda1/${THEUUID}/g" /boot/grub/grub.cfg

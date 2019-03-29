@@ -1,0 +1,29 @@
+task-laptop
+
+plasma-desktop plasma-workspace udisks2 upower kwin-x11 sddm xserver-xorg
+dolphin kdialog kfind konsole kwrite
+ark gwenview okular
+
+firefox-esr system-config-printer wget
+libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-kde5
+
+xserver-xorg-video-all
+
+vim-gtk joe gedit scite geany geany-plugins codeblocks codeblocks-contrib
+kdevelop kate sublime-text
+
+zsh mc emacs nano git ipython
+
+make gcc g++ gdb ddd valgrind clang
+
+ruby python python3
+
+strace lsof tree curl dnsutils screen
+iotop tmux htop kpartx tsocks units mlocate
+bridge-utils bash-completion rfkill apt-file ntp locales
+iptables-persistent
+
+stl-manual gdb-doc manpages
+cppreference-doc-en-html
+
+python3-requests
